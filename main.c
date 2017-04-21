@@ -48,6 +48,12 @@ PSP_MODULE_INFO("ResistancePatch", 0x1007, 1, 0);
 #define PS3_CTRL_R2			0x0002
 #define PS3_CTRL_L2			0x0001
 
+#define PSP_CTRL_L3 0x000002
+#define PSP_CTRL_R3 0x000004
+#define	PSP_CTRL_L2 0x000100 //This is the PSP L trigger code
+#define	PSP_CTRL_R2 0x000200 //This is the PSP R trigger code
+#define	PSP_CTRL_L1 0x000400
+#define	PSP_CTRL_R1 0x000800
 static STMOD_HANDLER previous;
 static SceCtrlData pad;
 static int init_mode = 0;
@@ -55,14 +61,14 @@ static int init_mode = 0;
 static u16 convertButtons(u32 psp_buttons) {
 	u16 ps3_buttons = 0;
 	
-	if (psp_buttons & PSP_CTRL_LEFT)
-		ps3_buttons |= PS3_CTRL_LEFT | PS3_CTRL_L2; // Remap weapon select
+	if (psp_buttons & PSP__CTRL_L2)
+		ps3_buttons |= PS3_CTRL_L2; 
 	
-	if (psp_buttons & PSP_CTRL_DOWN)
-		ps3_buttons |= PS3_CTRL_DOWN | PS3_CTRL_R3; // Remap aim
+	if (psp_buttons & PSP_CTRL_R3)
+		ps3_buttons |= PS3_CTRL_R3; 
 	
-	if (psp_buttons & PSP_CTRL_RIGHT)
-		ps3_buttons |= PS3_CTRL_RIGHT | PS3_CTRL_R2; // Remap weapon select
+	if (psp_buttons & PSP_CTRL_R2)
+		ps3_buttons |= PS3_CTRL_R2; 
 	
 	if (psp_buttons & PSP_CTRL_UP)
 		ps3_buttons |= PS3_CTRL_UP;
@@ -85,10 +91,10 @@ static u16 convertButtons(u32 psp_buttons) {
 	if (psp_buttons & PSP_CTRL_TRIANGLE)
 		ps3_buttons |= PS3_CTRL_TRIANGLE;
 	
-	if (psp_buttons & PSP_CTRL_RTRIGGER)
+	if (psp_buttons & PSP_CTRL_R1)
 		ps3_buttons |= PS3_CTRL_R1;
 	
-	if (psp_buttons & PSP_CTRL_LTRIGGER)
+	if (psp_buttons & PSP_CTRL_L1)
 		ps3_buttons |= PS3_CTRL_L1;
 	
 	return ps3_buttons;
